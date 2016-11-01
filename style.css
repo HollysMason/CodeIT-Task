@@ -1,0 +1,132 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Amble";
+}
+body{
+  background-color: #E7EAEF;
+}
+div.back{
+  width: 100%;
+  height: 250px;
+  background-color: #5683A4;
+}
+form{
+
+  position: relative;
+  top: -150px;
+}
+legend{
+  padding-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #EEEEEE;
+  width: 100%;
+  height: 30px;
+  border: 1px solid #CCCCCC;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+fieldset{
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #CCCCCC;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+div.container{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+div.icon_for_input{
+  width: 5%;
+  height: 25px;
+  background-color: #EEEEEE;
+  float: left;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid #CCCCCC;
+}
+div.icon_name,
+div.icon_secondname{
+  background-image: url("images/user-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+}
+div.icon_mail{
+  background-image: url("images/mail-icon.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+}
+div.icon_password{
+  background-image: url("images/password.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+}
+input{
+  width: 75%;
+  height: 25px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid #CCCCCC;
+  font-family: "Amble", Arial;
+  font-size: 15px;
+  text-indent: 20px;
+  outline: none;
+}
+select{
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  width: 80%;
+  height: 26px;
+}
+input[name="conditions"]  {
+  width: 15px;
+  height: 15px;
+  margin-top: 20px;
+  margin-left: 10%;
+}
+input[name="signUp"] {
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+  font-size: 18px;
+  cursor: pointer;
+  float: right;
+  margin-right: 10%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+span{
+  /*display: block;*/
+  height: 10px;
+  color: red;
+  font-size: 10px;
+  float: left;
+}
+.error{
+  border: 1px solid red;
+}
+.correct{
+  border: 1px solid green;
+}
+.error_icon{
+  border:1px solid  red !important;
+  background-color: red !important;
+}
+.correct_icon{
+  border:1px solid  green !important;
+  background-color: green !important;
+}
+
+@font-face {
+  font-family: "Amble";
+  src: url('../amble/Amble-Regular.ttf') format('truetype');
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css" media="screen" title="no title">
+  </head>
+  <body>
+    <div class="back"></div>
+  </form>
+    <form action="http://codeit.pro/frontTestTask/user/registration" method="post" name="signUp">
+      <fieldset>
+        <legend>Sign Up</legend>
+          <div class="container">
+            <div class="icon_for_input icon_name"></div>
+             <!-- error_icon -->
+            <input type="text" name="name" placeholder="Username">
+            <!-- error -->
+          </div>
+          <!-- <span>specify the name</span> -->
+          <div class="container">
+            <div class="icon_for_input icon_secondname"></div>
+            <input type="text" name="secondname" placeholder="User second name">
+          </div>
+         <div class="container">
+           <div class="icon_for_input icon_mail"></div>
+          <input type="text" name="email" placeholder="Email">
+        </div>
+        <div class="container">
+          <select name="gender" size="1">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="container">
+          <div class="icon_for_input icon_password"></div>
+          <input type="password" name="password" placeholder="Password">
+        </div>
+        <!-- <div class="container">
+          <div class="icon_for_input icon_password"></div>
+          <input type="password" name="password">
+        </div> -->
+          <input type="checkbox" name="conditions" value="conditions_true">
+          Conditions of Agreement
+        <input type="button" name="signUp" value="Send" onclick="check()"></input>
+      </fieldset>
+    </form>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script src="app.js"></script>
+
+  </body>
+</html>
