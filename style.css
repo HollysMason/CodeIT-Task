@@ -111,11 +111,10 @@ span{
   font-size: 10px;
   float: left;
 }
-.error{
+/*.error{
   border: 1px solid red;
 }
 .correct{
-  border: 1px solid green;
 }
 .error_icon{
   border:1px solid  red !important;
@@ -124,6 +123,16 @@ span{
 .correct_icon{
   border:1px solid  green !important;
   background-color: green !important;
+}*/
+span{
+  width: 100%;
+  text-align: center;
+}
+.ng-touched.ng-valid{
+  border: 1px solid green;
+}
+.ng-touched.ng-invalid {
+  border: 1px solid red;
 }
 
 @font-face {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="FormApp">
   <head>
     <meta charset="utf-8">
     <title>Sign Up</title>
@@ -7,46 +7,73 @@
   </head>
   <body>
     <div class="back"></div>
-  </form>
-    <form action="http://codeit.pro/frontTestTask/user/registration" method="post" name="signUp">
+    <form  name="signUp" ng-controller="formController as reg" novalidate>
+      <button type="button" name="button" ng-click="reg.logSMT();">PUSH</button>
       <fieldset>
         <legend>Sign Up</legend>
           <div class="container">
             <div class="icon_for_input icon_name"></div>
-             <!-- error_icon -->
-            <input type="text" name="name" placeholder="Username">
-            <!-- error -->
+            <input type="text" name="name" placeholder="Username"
+            ng-model="reg.user.name"
+            required
+            minlength="4"
+            >
           </div>
-          <!-- <span>specify the name</span> -->
+          <span ng-if="(signUp.name.$error.minlength || signUp.name.$error.required) && signUp.name.$touched">
+             Username must be at least 4 characters long
+          </span>
           <div class="container">
             <div class="icon_for_input icon_secondname"></div>
-            <input type="text" name="secondname" placeholder="User second name">
+            <input type="text" name="secondname" placeholder="User second name"
+            ng-model="reg.user.secondname"
+            required
+            minlength="4"
+            >
           </div>
+          <span ng-if="(signUp.secondname.$error.minlength || signUp.secondname.$error.required) && signUp.secondname.$touched">
+             User secondname must be at least 4 characters long
+          </span>
          <div class="container">
            <div class="icon_for_input icon_mail"></div>
-          <input type="text" name="email" placeholder="Email">
+          <input type="email" name="email" placeholder="Email"
+          ng-model="reg.user.email"
+          required
+          >
         </div>
+        <span ng-if="(signUp.email.$invalid && signUp.email.$touched)">
+           Must be a valid email address: handle@domain.com format
+        </span>
         <div class="container">
-          <select name="gender" size="1">
+          <select name="gender" size="1" ng-model="reg.user.gender" required>
+            <option value="">Select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
+        <span ng-if="(signUp.gender.$invalid && signUp.gender.$touched)"></span>
         <div class="container">
           <div class="icon_for_input icon_password"></div>
-          <input type="password" name="password" placeholder="Password">
+          <input type="password" name="password" placeholder="Password"
+          ng-model="reg.user.password"
+          required
+          minlength="8"
+          >
         </div>
-        <!-- <div class="container">
-          <div class="icon_for_input icon_password"></div>
-          <input type="password" name="password">
-        </div> -->
-          <input type="checkbox" name="conditions" value="conditions_true">
+        <span ng-if="(signUp.password.$error.minlength || signUp.password.$error.required) && signUp.password.$touched">
+          Password must be at least 8 characters long
+        </span>
+           <input type="checkbox" name="conditions" value="conditions_true"
+          ng-model="reg.user.checkbox"
+          >
           Conditions of Agreement
-        <input type="button" name="signUp" value="Send" onclick="check()"></input>
+          <span>{{reg.errorCondition}}</span>
+          <!-- ng-disabled="signUp.$invalid" -->
+          <button
+          ng-click="reg.submit();">Send</button>
       </fieldset>
     </form>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script src="angular.min.js"></script>
  <script src="app.js"></script>
 
   </body>
