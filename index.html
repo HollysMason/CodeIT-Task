@@ -7,73 +7,51 @@
   </head>
   <body>
     <div class="back"></div>
-    <form  name="signUp" ng-controller="formController as reg" novalidate>
-      <button type="button" name="button" ng-click="reg.logSMT();">PUSH</button>
+    <form  name="signUp">
+      <!-- <button type="button" name="button" ng-click="reg.logSMT();">PUSH</button> -->
       <fieldset>
         <legend>Sign Up</legend>
           <div class="container">
             <div class="icon_for_input icon_name"></div>
-            <input type="text" name="name" placeholder="Username"
-            ng-model="reg.user.name"
-            required
-            minlength="4"
-            >
+            <input type="text" name="name" placeholder="Username" data-name="name">
           </div>
-          <span ng-if="(signUp.name.$error.minlength || signUp.name.$error.required) && signUp.name.$touched">
-             Username must be at least 4 characters long
-          </span>
+          <span data-name="name"></span>
           <div class="container">
             <div class="icon_for_input icon_secondname"></div>
-            <input type="text" name="secondname" placeholder="User second name"
-            ng-model="reg.user.secondname"
-            required
-            minlength="4"
-            >
+            <input type="text" name="secondname" placeholder="User second name" data-name="secondname">
           </div>
-          <span ng-if="(signUp.secondname.$error.minlength || signUp.secondname.$error.required) && signUp.secondname.$touched">
-             User secondname must be at least 4 characters long
-          </span>
+          <span data-name="secondname"></span>
          <div class="container">
            <div class="icon_for_input icon_mail"></div>
-          <input type="email" name="email" placeholder="Email"
-          ng-model="reg.user.email"
-          required
-          >
+          <input type="email" name="email" placeholder="Email" data-name="email">
         </div>
-        <span ng-if="(signUp.email.$invalid && signUp.email.$touched)">
-           Must be a valid email address: handle@domain.com format
-        </span>
+        <span data-name="email"></span>
         <div class="container">
-          <select name="gender" size="1" ng-model="reg.user.gender" required>
+          <select name="gender" size="1" data-name="gender">
             <option value="">Select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
-        <span ng-if="(signUp.gender.$invalid && signUp.gender.$touched)"></span>
+        <span data-name="gender"></span>
+
         <div class="container">
           <div class="icon_for_input icon_password"></div>
-          <input type="password" name="password" placeholder="Password"
-          ng-model="reg.user.password"
-          required
-          minlength="8"
-          >
+          <input type="password" name="password" placeholder="Password" data-name="password" >
         </div>
-        <span ng-if="(signUp.password.$error.minlength || signUp.password.$error.required) && signUp.password.$touched">
-          Password must be at least 8 characters long
-        </span>
-           <input type="checkbox" name="conditions" value="conditions_true"
-          ng-model="reg.user.checkbox"
-          >
+        <span data-name="password"></span>
+        <div class="container">
+          <input type="checkbox" name="conditions" value="conditions_true" data-name="checkbox">
           Conditions of Agreement
-          <span>{{reg.errorCondition}}</span>
-          <!-- ng-disabled="signUp.$invalid" -->
-          <button
-          ng-click="reg.submit();">Send</button>
+        </div>
+        <span data-name="checkbox"></span>
+
+           <button type="button" name="button">Send</button>
+           <h5></h5>
       </fieldset>
     </form>
 
- <script src="angular.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
  <script src="app.js"></script>
 
   </body>

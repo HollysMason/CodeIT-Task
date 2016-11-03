@@ -1,119 +1,138 @@
-//
-// function showError (container) {
-//   var divContainer = container.parentNode.childNodes[1];
-//   divContainer.classList.remove("correct_icon");
-//   divContainer.classList.add("error_icon");
-//   container.className = "error"
-//
-//   return false;
-// }
-//
-// function showCorrect (container) {
-//   container.parentNode.childNodes[1].classList.add("correct_icon");
-//   container.className = "correct";
-//
-//   return true;
-// }
-//
-//
-//
-// function check() {
-//   var form = document.forms.signUp;
-//   var firstInput =  form.elements.name;
-//
-//   var a = !firstInput.value ? showError(firstInput) : showCorrect(firstInput);
-//   console.log(a);
-// }
-//
-// $(document).ready(function(){
-//
-//   $.ajax({
-// method: "POST",
-// url: "http://codeit.pro/frontTestTask/user/registration",
-// data: {
-// name: 'dasd',
-// secondname: 'dsda',
-// email: 'sadasd@dasda.da',
-// gender: 'male',
-// pass: "asdasdasd",
-// checkbox: true
-// }
-// })
-// .done(function( msg ) {
-// console.log(msg);
-// });
-//
-// });
-(function () {
-  'use strict';
+$(document).ready(function(){
+  $('button').click(function () {
+    var form = new Form();
+    form.checkAll();
+  });
+});
 
-  angular.module('FormApp', [])
-  .controller('formController', formController)
-  .service('formService', formService);
+function Rules () {
+  this.name = {
+    validate: function (input) {
+      var value  = $(input).val();
+      return value.length < 4 ?
+       showError(input, "Username must be at least 4 characters long") : showCorrect(input);
+    }
+  },
+  this.secondname = {
+    validate: function (input) {
+      var value  = $(input).val();
+      return  value.length < 4 ?
+      showError(input, "User secondname must be at least 4 characters long") : showCorrect(input);
+    }
+  },
+  // начало строки, английские буквы от одной до бесконечности,
+  // собака, опять буквы от одной до бесконечности, точка, буквы
+  // от двух до четырёх (если почта где-нибудь на .info), конец строки.
+  // Регистр букв не учитывается.
+  this.email = {
+    validate: function (input) {
+      return /^\w+@\w+\.\w{2,4}$/i.test($(input).val()) ?
+       showCorrect(input) : showError(input, "Must be a valid email address: handle@domain.com format");
+    }
+  },
+  this.gender = {
+    validate : function (input) {
+      return $(input).find("option:selected").text() === "Select gender" ?
+      showError(input, "Please chose gender") : showCorrect(input);
+    }
+  },
+  this.password = {
+    validate : function (input) {
+     return /(?=.*\d)((?=.*[a-z])|(?=.*[A-Z]){4,}).{8,20}/.test($(input).val()) ?
+     showCorrect(input) : showError(input,
+      "requirements : 1)At least 8 characters" +
+      "2) Only Latins, Upper and Lower case characters" +
+      "3)At least 4 numbers"
+      );
+    }
+  },
+  this.checkbox = {
+    validate : function (input) {
+      return $(input).prop("checked") ? showCorrect(input) : showError(input, "You should agree with conditions");
+    }
+  }
 
-  formController.$inject = ['formService'];
-  function formController (formService) {
-    var reg = this;
+  function showError (container, message) {
+    $(container).addClass('error');
+    $(container).siblings().addClass('error_icon');
+    showErrorMessage(container, message);
 
-    reg.complited = false;
-    reg.errorCondition = "";
+    return false;
+  }
 
-    reg.logSMT = function () {
-      var promise = formService.registraiteUser();
+  function showCorrect (container) {
+    $(container).addClass('correct');
+    $(container).siblings().addClass('correct_icon');
+    showErrorMessage (container, "");
 
-      promise.then(function (response) {
-        console.log(response.data);
+    return true;
+  }
+
+  function showErrorMessage (input, message) {
+    $("span[data-name='" + $(input).data('name') + "']").text(message);
+  }
+}
+
+
+
+function Form() {
+  var rules = new Rules();
+  var user = {
+    name: undefined,
+    secondname: undefined,
+    email: undefined,
+    gender: undefined,
+    password: undefined,
+    checkbox : undefined
+  };
+  var dataName;
+  this.allinputs = $('input,select[data-name]');
+
+
+  this.checkAll = function () {
+    this.allinputs.each(function (index, item) {
+      dataName = $(item).attr('data-name');
+      if (rules[dataName].validate(item)) {
+        user[dataName] = $(item).val();
+      }
+    });
+    if (checkObj (user)) {
+      createUser(user);
+    }
+  };
+
+  function checkObj (obj) {
+    for (key in obj) {
+      if (obj[key] == undefined) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function createUser (obj) {
+    var request = $.ajax({
+      method: "POST",
+      url: "http://codeit.pro/frontTestTask/user/registration",
+      data: {
+      name: obj.name,
+      secondname: obj.secondname,
+      email: obj.email,
+      gender: obj.gender,
+      pass: obj.password,
+      checkbox: obj.checkbox
+      }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      request.done(function( msg ) {
 
-    };
-
-    // reg.submit = function () {
-    //   var count = 1;
-    //     for (item in reg.user) {
-    //       count++;
-    //     }
-    //     if (count === 7) {
-    //       var promise = formService.registraiteUser();
-    //
-    //       promise.then(function (response) {
-    //         console.log(response.data);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    //
-    //     } else if (count < 7 ) {
-    //       reg.errorCondition = "Please fill the inputs."
-    //     } else {
-    //       reg.errorCondition = "Please accept condition."
-    //     }
-    //
-    // };
-
-  }
-
-  formService.$inject = ['$http'];
-  function formService ($http) {
-      var service = this;
-
-    service.registraiteUser = function () {
-      var response = $http({
-        method: "GET",
-        url: ("http://codeit.pro/frontTestTask/user/registration"),
-        params: {
-          name: 'dasd',
-          secondname: 'dsda',
-          email: 'sadasd@daasda.da',
-          gender: 'male',
-          pass: "123457846",
-          checkbox: true
+        if (msg.status == "OK") {
+          window.location.replace("/mainPage.html");
+        } else {
+          $('h5').text(msg.message);
         }
-      });
+      })
 
-        return response;
-    };
   }
-})()
+
+}
