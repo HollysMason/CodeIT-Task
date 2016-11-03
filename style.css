@@ -40,6 +40,11 @@ div.container{
   margin-top: 20px;
   display: flex;
   justify-content: center;
+
+}
+div.container_select{
+  width: 100%;
+
 }
 div.icon_for_input{
   width: 5%;
@@ -129,13 +134,20 @@ span{
   width: 100%;
   text-align: center;
 }
-/*.ng-touched.ng-valid{
-  border: 1px solid green;
+h5{
+  color: red;
+  text-align: center;
 }
-.ng-touched.ng-invalid {
-  border: 1px solid red;
-}*/
-
+button{
+    border-radius: 5px;
+    width: 70px;
+    height: 25px;
+    float: right;
+    margin-right: 10%;
+    margin-bottom: 35px;
+    cursor: pointer;
+    outline: none;
+}
 @font-face {
   font-family: "Amble";
   src: url('../amble/Amble-Regular.ttf') format('truetype');

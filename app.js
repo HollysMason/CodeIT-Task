@@ -20,10 +20,6 @@ function Rules () {
       showError(input, "User secondname must be at least 4 characters long") : showCorrect(input);
     }
   },
-  // начало строки, английские буквы от одной до бесконечности,
-  // собака, опять буквы от одной до бесконечности, точка, буквы
-  // от двух до четырёх (если почта где-нибудь на .info), конец строки.
-  // Регистр букв не учитывается.
   this.email = {
     validate: function (input) {
       return /^\w+@\w+\.\w{2,4}$/i.test($(input).val()) ?
@@ -127,9 +123,9 @@ function Form() {
       request.done(function( msg ) {
 
         if (msg.status == "OK") {
-          window.location.replace("https://hollysmason.github.io/CodeIT-Task/mainPage.html");
+          window.location.replace("mainPage.html");
         } else {
-          $('h5').text(msg.message);
+          $('h5.server_answer').text(msg.message);
         }
       })
 
