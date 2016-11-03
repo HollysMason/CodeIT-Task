@@ -127,7 +127,7 @@ function Form() {
       request.done(function( msg ) {
 
         if (msg.status == "OK") {
-          window.location.replace("/mainPage.html");
+          window.location.replace("https://hollysmason.github.io/CodeIT-Task/mainPage.html");
         } else {
           $('h5').text(msg.message);
         }
