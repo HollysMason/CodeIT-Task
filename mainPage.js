@@ -5,6 +5,7 @@ $(document).ready(function () {
       url: "http://codeit.pro/frontTestTask/company/getList",
     }).done(function (msg) {
       $('div.main_loader').css('display','none');
+      console.log(msg);
       companies = new Companies(msg);
       companies.totalCompanies();
       companies.listOfCompanies();
@@ -25,19 +26,46 @@ $(document).ready(function () {
       $('div.by_name_down').click(function () {
         companies.compare('a');
       });
+
+      companies.loadLocation();
+
+      $('div.grafic').click(function (event) {
+          var country = $(event.currentTarget).find('span.name_locarion_company').text();
+          // console.log(country);
+          companies.showCompaniesInCountry(country);
+      });
+      $('button.back').click(function (item, i) {
+          companies.backToGraphic();
+      });
+
+
+    });
+
+    $.ajax({
+      method: "GET",
+      url: "http://codeit.pro/frontTestTask/news/getList",
+    }).done(function (msg) {
+        var news = new News(msg);
+
+        $('.nav_slide').click(function (event) {
+
+          news.slide($(event.currentTarget).index());
+        });
+
+        news.loadNews();
     });
 
 
 });
 
-
 function Companies (obj) {
   this.comp = obj;
+
   this.currentPartners;
+
   this.lastSort = function () {
     return this.compare('>');
   };
-
 
   this.totalCompanies = function () {
     var companies = this.comp.list;
@@ -67,6 +95,55 @@ function Companies (obj) {
   };
 
 
+
+  this.loadLocation = function () {
+    var a = {};
+    var count = 0;
+    this.comp.list.forEach(function (item , i) {
+       a[item.location.name] = 0;
+      //  a[item.location.code] = undefined;
+       //  a[item.location.name] = findAllCompanies(item.location.name);
+     });
+
+    var massCom = this.comp.list;
+    for (key in a) {
+      var count = 0;
+      massCom.forEach(function (item, i) {
+        if (item.location.name == key) {
+            count++;
+        }
+      });
+      a[key] = count;
+    }
+    loadCountriesInPercents(a, massCom.length);
+  };
+
+  function loadCountriesInPercents(obj, amountOfCompanies) {
+    for (key in obj) {
+      $('.companies_location').append(
+        '<div class="grafic">' +
+        '<span class="name_locarion_company">' + key + '</span>' +
+          '<div class="container_location" style="height:' + ((obj[key]/amountOfCompanies * 100) + 40 )  +'px">' +
+            '<span class="percent_company_location">'  + obj[key] + '%' + '</span>' +
+          '</div>' +
+        '</div>'
+      )
+    }
+  }
+
+  // этот алгоритм для поиска всех
+  // var companies = this.comp;
+  // function findAllCompanies (nameCountry) {
+  //   var count = 0;
+  //   companies = companies.list;
+  //
+  //   companies.forEach(function (item, i) {
+  //       if (item.location.name === nameCountry) {
+  //         count++;
+  //       }
+  //   });
+  //   return count;
+  // };
 
   function showPartners (arrPartners, char) {
     $('span.sorted_by').text(char);
@@ -143,18 +220,83 @@ function Companies (obj) {
     };
   };
 
+  this.showCompaniesInCountry = function (country) {
+    $('div.companies_location').css('display','none');
+    $('ul.listOfComInCountries').css('display','block');
+    $('button.back').css('display','block');
+    var companies = this.comp.list;
+    companies.forEach(function (item, i) {
+      if (item.location.name === country) {
+        $('ul.listOfComInCountries').append('<li>' + item.name + '</li>');
+      }
+    });
+  };
+
+  this.backToGraphic = function () {
+
+    $('button.back').css('display','none');
+    $('ul.listOfComInCountries').css('display','none');
+    $('div.companies_location').css('display','flex');
+  };
+
+
+
 }
 
+function News (obj) {
+  this.news = obj;
+  this.logAll = function () {
+    console.log(this.news.list);
+  };
+  var active = 0;
+  var lenthOfnews = this.news.list.length - 1;
+  this.slide = function (direction) {
+    if (direction == 1 && active !== lenthOfnews) {
+
+        active++;
+        $('.slides').animate({right: active * 100 + '%'},1000);
+    } else if (direction == 0 && active != 0) {
+        active--;
+        $('.slides').animate({right: active * 100 + '%'},1000);
+    }
+  };
+  this.loadNews = function () {
+    var arrNews = this.news.list;
+
+    $('div.slides').css('width', this.news.list.length * 100 + '%');
+    $('div.news').css('width', 100 / this.news.list.length + '%' );
+    var teststr = "HUI PIZDA LOPATRA"
+    for (var i = 0, max = this.news.list.length; i < max; i++) {
+
+      $('div.slides').append(
+        '<div class="news">' +
+          '<article class="news_content">'+
+            '<figure>'+
+              '<img src="' + arrNews[i].img + '" alt="" />'+
+              '<figcaption>'+
+                '<b>Author: </b>' + arrNews[i].author + '<br>'+
+                '<b>Public: </b>' + arrNews[i].date +
+              '</figcaption>'+
+            '</figure>'+
+            '<p>'+
+            // '<h1><a href=" ' + arrNews[i].link + ' "> Missed header in Object </a></h1>' +
+
+              formatText(arrNews[i].description) +
+              // i +
+            '</p>'+
+          '</article>'+
+        '</div>'
+      );
+    }
 
 
+  };
 
+  function formatText (text) {
+    if (text.length < 228) {
+      return text;
+    }
 
-
-var getNews = function () {
-  $.ajax({
-    method: "GET",
-    url: "http://codeit.pro/frontTestTask/news/getList",
-  }).done(function (msg) {
-      console.log(msg);
-  });
-};
+    return text.slice(0, 228) + '...';
+  }
+}
