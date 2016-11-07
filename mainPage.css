@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+  font-family: "Amble", Arial;
 }
 body{
   background-color: #E7EAEF;
@@ -10,12 +11,7 @@ div.back{
   height: 250px;
   background-color: #5683A4;
 }
-div.main_loader{
-  margin: 0 auto;
-  position: relative;
-  top: -200px;
-  /*display: none;*/
-}
+
 div.main_a{
 
   width: 80%;
@@ -50,11 +46,24 @@ div.partner_content{
 
 
 }
+h1{
+  display: inline-block;
+}
+a{
+  width: 100%;
+  height: 20px;
+  display: inline-block;
+
+}
 article.percent{
   width: 100%;
   height: 35%;
   border-radius: 100%;
+  text-align: center;
+  line-height: 80px;
   border: 1px solid black;
+  font-weight: bold;
+
 }
 div.stand{
   width: 15%;
@@ -66,6 +75,9 @@ article.name_partner_company{
   width: 100%;
   height: 55%;
   border: 1px solid black;
+  text-align: center;
+  font-weight: bold;
+  line-height: 100px;
 }
 li.partner_container{
   display: inline-block;
@@ -107,6 +119,7 @@ article.total{
   text-align: center;
   line-height: 190px;
   font-size: 40px;
+  display: none;
 }
 ul{
   height: 80%;
@@ -121,7 +134,13 @@ ul li.list_companies_item{
   height: 50px;
   border: 1px solid black;
   cursor: pointer;
+  text-align: center;
+  line-height: 50px;
 }
+.chosed  {
+  background-color: #5683A4;
+}
+
 @media screen and (min-width: 320px) {
   div.main_a{
     width: 80%;
@@ -201,6 +220,7 @@ div.down{
 div.carousel{
   width: 100%;
   overflow: hidden;
+  display: none;
 }
 div.slides{
   width: 1000%;
@@ -219,25 +239,24 @@ div.news{
 nav.navigation_slider{
   position: relative;
   width: 100%;
-
-  background-color: green;
 }
 nav.navigation_slider ul{
   overflow: hidden;
   list-style: none;
   text-align: center;
+  position: relative;
 }
 nav.navigation_slider ul li{
   display: inline-block;
-  width: 15px;
+  width: 45%;
   height: 15px;
   background-color: black;
-  border-radius: 100%;
+
   cursor: pointer;
   color: white;
 }
 nav.navigation_slider ul li:hover{
-  background-color: pink;
+  background-color: #5683A4;
 }
 
 article.news_content{
@@ -251,7 +270,7 @@ figure {
   height: auto;
   margin: 5%;
 }
-p{
+article.paragrapher{
   width: 60%;
   height: auto;
   margin: 5%;
@@ -310,5 +329,152 @@ button.back{
   cursor: pointer;
   font-weight: bold;
   display: none;
-  
+  position: absolute;
+  margin-top: -10px;
+}
+/*loader*/
+div.main_loader{
+  margin: 0 auto;
+  position: relative;
+  top: -200px;
+
+}
+.s2 {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: transparent;
+  top: 50vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.s1 {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 50vh;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-color: transparent;
+}
+
+.bigcon {
+  position: absolute;
+  height: 95px;
+  width: 95px;
+  top: 50vh;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  background-color: transparent;
+  animation: bigcon 2s infinite linear;
+  animation-delay: 0.25s;
+}
+
+.b {
+  border-radius: 50%;
+  position: absolute;
+}
+
+.s {
+  width: 25px;
+  height: 25px;
+  animation: small 2s infinite ease;
+  box-shadow: 0px 2px rgba(0,0,0,0.3);
+   background-color: #46b9ff;
+}
+
+.s:nth-child(1) {
+  top: 0%;
+  left: 0%;
+}
+
+.s:nth-child(2) {
+  top: 0%;
+  right: 0%;
+}
+
+.s:nth-child(3) {
+  right: 0%;
+  bottom: 0%;
+}
+
+.s:nth-child(4) {
+  bottom: 0%;
+  left: 0%;
+}
+
+.big {
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  box-shadow:0px 0px 10px #54f7f8, 0px 0px 20px #54f7f8, 0px 0px 30px #54f7f8, 0px 0px 50px #54f7f8, 0px 0px 60px #54f7f8 ;
+  z-index: 1;
+  background-color: #54f7f8;
+  animation: bigball 1s infinite linear;
+}
+
+.sb1{
+  animation-delay: -1.75s;
+}
+.sb6{
+  animation-delay: -1.5s;
+}
+.sb2{
+  animation-delay: -1.25s;
+}
+.sb7{
+  animation-delay: -1s;
+}
+.sb3{
+  animation-delay: -0.75s;
+}
+.sb8{
+  animation-delay: -0.5s;
+}
+.sb4{
+  animation-delay: -0.25s;
+}
+.sb5{
+  animation-delay: -0s;
+}
+
+@keyframes bigcon {
+  0% {
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  100% {
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(405deg);
+  }
+}
+
+@keyframes small {
+  0% {
+    transform: scale(1);
+     background-color: #46b9ff;
+  }
+  10% {
+    transform: scale(1.3);
+    background-color: #54f7f8;
+  }
+  15% {
+    transform: scale(1);
+  }
+  25%{
+transform: scale(1);
+     background-color: #46b9ff;
+  }
+  100%{
+    transform: scale(1);
+     background-color: #46b9ff;
+  }
+}
+
+@font-face {
+  font-family: "Amble";
+  src: url('../amble/Amble-Regular.ttf') format('truetype');
 }

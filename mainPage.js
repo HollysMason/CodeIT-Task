@@ -1,16 +1,18 @@
 $(document).ready(function () {
+  // 'уже слишком поздно обнаружил баг, слайдер с открытой секцией "Companies partners" перелистывается не плавно'
   var companies;
-  var comp =  $.ajax({
+  $.ajax({
       method: "GET",
       url: "http://codeit.pro/frontTestTask/company/getList",
     }).done(function (msg) {
       $('div.main_loader').css('display','none');
-      console.log(msg);
+      $('div.carousel,article.total').css('display','block');
       companies = new Companies(msg);
       companies.totalCompanies();
       companies.listOfCompanies();
       $('ul.list_companies li').click(function (event) {
-
+        $('ul.list_companies li').removeClass('chosed');
+        $(event.target).addClass('chosed');
         companies.lisPartners($(event.target).text());
       });
 
@@ -31,7 +33,7 @@ $(document).ready(function () {
 
       $('div.grafic').click(function (event) {
           var country = $(event.currentTarget).find('span.name_locarion_company').text();
-          // console.log(country);
+
           companies.showCompaniesInCountry(country);
       });
       $('button.back').click(function (item, i) {
@@ -86,12 +88,12 @@ function Companies (obj) {
 
   this.lisPartners = function (eventLi) {
     var companies = this.comp.list;
-    for (key in companies) {
-      if (companies[key].name === eventLi) {
-        this.currentPartners = companies[key].partners;
+      for (key in companies) {
+        if (companies[key].name === eventLi) {
+          this.currentPartners = companies[key].partners;
+        }
       }
-    }
-    this.lastSort();
+      this.lastSort();
   };
 
 
@@ -101,7 +103,7 @@ function Companies (obj) {
     var count = 0;
     this.comp.list.forEach(function (item , i) {
        a[item.location.name] = 0;
-      //  a[item.location.code] = undefined;
+
        //  a[item.location.name] = findAllCompanies(item.location.name);
      });
 
@@ -131,7 +133,8 @@ function Companies (obj) {
     }
   }
 
-  // этот алгоритм для поиска всех
+  // этот алгоритм для поиска всех компаниый в каждом городе быстрее
+  // но была ошибка, я не успел ее пофиксить
   // var companies = this.comp;
   // function findAllCompanies (nameCountry) {
   //   var count = 0;
@@ -265,9 +268,9 @@ function News (obj) {
 
     $('div.slides').css('width', this.news.list.length * 100 + '%');
     $('div.news').css('width', 100 / this.news.list.length + '%' );
-    var teststr = "HUI PIZDA LOPATRA"
+    var date;
     for (var i = 0, max = this.news.list.length; i < max; i++) {
-
+    date = new Date(Number(arrNews[i].date));
       $('div.slides').append(
         '<div class="news">' +
           '<article class="news_content">'+
@@ -275,15 +278,15 @@ function News (obj) {
               '<img src="' + arrNews[i].img + '" alt="" />'+
               '<figcaption>'+
                 '<b>Author: </b>' + arrNews[i].author + '<br>'+
-                '<b>Public: </b>' + arrNews[i].date +
+                '<b>Public: </b>' + date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() +
               '</figcaption>'+
             '</figure>'+
-            '<p>'+
-            // '<h1><a href=" ' + arrNews[i].link + ' "> Missed header in Object </a></h1>' +
+            '<article class="paragrapher">'+
+            '<h1><a href=" ' + arrNews[i].link + ' "> Missed header in Object </a></h1>' +
 
               formatText(arrNews[i].description) +
-              // i +
-            '</p>'+
+
+            '</article>'+
           '</article>'+
         '</div>'
       );

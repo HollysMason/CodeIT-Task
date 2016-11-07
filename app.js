@@ -16,14 +16,14 @@ function Rules () {
   this.secondname = {
     validate: function (input) {
       var value  = $(input).val();
-      return  value.length < 4 ?
-      showError(input, "User secondname must be at least 4 characters long") : showCorrect(input);
+      return  value.length < 3 ?
+      showError(input, "User secondname must be at least 3 characters long") : showCorrect(input);
     }
   },
   this.email = {
     validate: function (input) {
       return /^\w+@\w+\.\w{2,4}$/i.test($(input).val()) ?
-       showCorrect(input) : showError(input, "Must be a valid email address: handle@domain.com format");
+       showCorrect(input) : showError(input, "Email is not valid. Must be a valid email address: handle@domain.com format");
     }
   },
   this.gender = {
@@ -121,12 +121,7 @@ function Form() {
       }
       })
       request.done(function( msg ) {
-
-        if (msg.status == "OK") {
-          window.location.replace("mainPage.html");
-        } else {
-          $('h5.server_answer').text(msg.message);
-        }
+        msg.status == "OK" ? window.location.replace("mainPage.html") : $('h5.server_answer').text(msg.message);
       })
 
   }
